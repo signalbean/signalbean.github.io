@@ -14,9 +14,9 @@
         }
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #0c0a19; /* Darker space background */
+            background-color: #0c0a19;
             color: #E5E7EB;
-            overflow-x: hidden; /* Prevent horizontal scroll */
+            overflow-x: hidden;
         }
         #bg-canvas {
             position: fixed;
@@ -24,7 +24,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            z-index: -1; /* Place canvas behind everything */
+            z-index: -1;
         }
         .text-cyan-glow {
             color: #22d3ee;
@@ -42,7 +42,7 @@
             box-shadow: 0 0 20px rgba(168, 85, 247, 0.5);
         }
         .btn-primary:hover {
-            background-position: right center; /* Slides the gradient */
+            background-position: right center;
             transform: translateY(-2px);
             box-shadow: 0 0 30px rgba(34, 211, 238, 0.5), 0 0 30px rgba(168, 85, 247, 0.5);
         }
@@ -53,15 +53,15 @@
             transition: color 0.3s ease;
         }
         .nav-link:hover {
-            color: #22d3ee; /* Cyan */
+            color: #22d3ee;
         }
         .content-section {
             position: relative;
             z-index: 1;
         }
         .section-card {
-            background-color: rgba(31, 41, 55, 0.8); /* Semi-transparent card */
-            backdrop-filter: blur(10px); /* Frosted glass effect */
+            background-color: rgba(31, 41, 55, 0.8);
+            backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
             border-radius: 1rem;
             border: 1px solid #374151;
@@ -80,7 +80,7 @@
              z-index: 10;
         }
         .youtube-link:hover i {
-            color: #FF0000; /* Red for YouTube */
+            color: #FF0000;
         }
     </style>
 </head>
@@ -88,7 +88,6 @@
 
     <canvas id="bg-canvas"></canvas>
 
-    <!-- Header -->
     <header class="py-6 px-4 sm:px-6 lg:px-8">
         <nav class="flex justify-between items-center">
             <div class="text-2xl font-bold">
@@ -105,7 +104,6 @@
                 </button>
             </div>
         </nav>
-        <!-- Mobile Menu -->
         <div id="mobile-menu" class="hidden md:hidden mt-4 bg-gray-900/90 rounded-lg py-2">
             <a href="#about" class="block py-2 text-center nav-link">About</a>
             <a href="#projects" class="block py-2 text-center nav-link">Projects</a>
@@ -113,7 +111,6 @@
         </div>
     </header>
 
-    <!-- Hero Section -->
     <main class="content-section container mx-auto px-4 sm:px-6 lg:px-8 py-20 text-center">
         <h1 class="text-5xl md:text-7xl font-black mb-4">
             <span class="text-purple-glow">Auth</span><span class="text-cyan-glow">Bean</span>
@@ -122,7 +119,6 @@
         <a href="#projects" class="btn-primary font-bold py-3 px-8 rounded-full text-lg inline-block">See My Work</a>
     </main>
 
-    <!-- About Section -->
     <section id="about" class="content-section py-20">
         <div class="container mx-auto px-4 sm:px-6 lg:px-8">
             <div class="section-card p-8 md:p-12 max-w-4xl mx-auto">
@@ -134,7 +130,6 @@
         </div>
     </section>
 
-    <!-- Projects Section -->
     <section id="projects" class="content-section py-20">
         <div class="container mx-auto px-4 sm:px-6 lg:px-8">
             <h2 class="text-4xl font-bold text-center mb-12">Current Project</h2>
@@ -158,7 +153,6 @@
         </div>
     </section>
 
-    <!-- Contact Section -->
     <section id="contact" class="content-section py-20">
         <div class="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
              <div class="section-card p-8 md:p-12 max-w-2xl mx-auto">
@@ -171,7 +165,6 @@
         </div>
     </section>
 
-    <!-- Footer -->
     <footer class="content-section py-8">
         <div class="container mx-auto px-4 sm:px-6 lg:px-8 text-center text-gray-400">
             <div class="flex justify-center items-center space-x-6 mb-4">
@@ -187,7 +180,6 @@
     </footer>
     
     <script>
-        // --- Mobile Menu Toggle ---
         const menuBtn = document.getElementById('menu-btn');
         const mobileMenu = document.getElementById('mobile-menu');
 
@@ -195,31 +187,49 @@
             mobileMenu.classList.toggle('hidden');
         });
 
-        // --- Three.js Starfield Background ---
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
         let scene, camera, renderer, starLayers = [];
         let mouseX = 0;
         let mouseY = 0;
 
+        function createCircleTexture(color, size) {
+            const matCanvas = document.createElement('canvas');
+            matCanvas.width = matCanvas.height = size;
+            const matContext = matCanvas.getContext('2d');
+            const texture = new THREE.Texture(matCanvas);
+            const center = size / 2;
+            matContext.beginPath();
+            matContext.arc(center, center, size/2, 0, 2 * Math.PI, false);
+            matContext.closePath();
+            matContext.fillStyle = color;
+            matContext.fill();
+            texture.needsUpdate = true;
+            return texture;
+        }
+
         function init() {
-            // Scene setup
             scene = new THREE.Scene();
-            
-            // Camera setup
             camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 1, 1000);
             camera.position.z = 5;
             
-            // Renderer setup
             renderer = new THREE.WebGLRenderer({
                 canvas: document.querySelector('#bg-canvas'),
                 alpha: true
             });
             renderer.setSize(window.innerWidth, window.innerHeight);
             
-            // --- Star Layer Creation ---
             const layers = [
-                { count: 5000, size: 0.7, color: 0xffffff, speed: 0.00008 }, // Small, distant stars
-                { count: 3000, size: 1.2, color: 0xaaaaff, speed: 0.00005 }, // Medium, bluish stars
-                { count: 500,  size: 2.0, color: 0xffaaaa, speed: 0.00002 }  // Large, reddish, closer stars
+                { count: 6000, size: 1.5, color: '#ffffff', speed: 0.00008 },
+                { count: 4000, size: 2.5, color: '#aaaaff', speed: 0.00005 },
+                { count: 1000,  size: 4.0, color: '#ffaaaa', speed: 0.00002 }
             ];
 
             layers.forEach(layerInfo => {
@@ -234,10 +244,11 @@
                 starGeometry.setAttribute('position', new THREE.Float32BufferAttribute(starVertices, 3));
                 
                 const starMaterial = new THREE.PointsMaterial({
-                    color: layerInfo.color,
+                    map: createCircleTexture(layerInfo.color, 256),
                     size: layerInfo.size,
                     transparent: true,
-                    opacity: 0.8,
+                    opacity: 1.0,
+                    alphaTest: 0.5,
                     sizeAttenuation: true
                 });
 
@@ -250,11 +261,9 @@
                 scene.add(stars);
             });
 
-            // Event Listeners
             document.body.addEventListener('mousemove', onMouseMove);
             window.addEventListener('resize', onWindowResize, false);
 
-            // Start animation loop
             animate();
         }
 
@@ -262,17 +271,12 @@
             requestAnimationFrame(animate);
             const time = Date.now();
 
-            // Animate each star layer
             starLayers.forEach((layer, index) => {
-                // Constant random rotation
                 layer.points.rotation.y += layer.speed;
                 layer.points.rotation.x += layer.speed / 2;
-                
-                // Twinkling effect by animating opacity
-                layer.points.material.opacity = 0.6 + Math.sin(time * 0.0005 * (index + 1)) * 0.2;
+                layer.points.material.opacity = 0.8 + Math.sin(time * 0.0005 * (index + 1)) * 0.2;
             });
             
-            // Smoother parallax effect from mouse
             camera.position.x += (mouseX * 2 - camera.position.x) * 0.02;
             camera.position.y += (-mouseY * 2 - camera.position.y) * 0.02;
             camera.lookAt(scene.position);
