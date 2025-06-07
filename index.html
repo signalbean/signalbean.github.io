@@ -5,13 +5,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>signalbean | Developer</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <style>
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #111827; /* Dark background */
-            color: #E5E7EB; /* Light text */
+            background-color: #0c0a19; /* Darker space background */
+            color: #E5E7EB;
+            overflow-x: hidden; /* Prevent horizontal scroll */
+        }
+        #bg-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1; /* Place canvas behind everything */
         }
         .text-cyan-glow {
             color: #22d3ee;
@@ -22,15 +32,16 @@
              text-shadow: 0 0 8px rgba(192, 132, 252, 0.6);
         }
         .btn-primary {
-            background-color: #a855f7; /* Purple */
+            background-image: linear-gradient(to right, #a855f7 0%, #22d3ee 51%, #a855f7 100%);
+            background-size: 200% auto;
             color: white;
-            transition: all 0.3s ease;
-            box-shadow: 0 0 15px rgba(168, 85, 247, 0.4);
+            transition: all 0.5s ease;
+            box-shadow: 0 0 20px rgba(168, 85, 247, 0.5);
         }
         .btn-primary:hover {
-            background-color: #9333ea;
+            background-position: right center; /* Slides the gradient */
             transform: translateY(-2px);
-            box-shadow: 0 0 25px rgba(168, 85, 247, 0.7);
+            box-shadow: 0 0 30px rgba(34, 211, 238, 0.5), 0 0 30px rgba(168, 85, 247, 0.5);
         }
         .btn-primary:active {
             transform: translateY(1px);
@@ -41,8 +52,14 @@
         .nav-link:hover {
             color: #22d3ee; /* Cyan */
         }
+        .content-section {
+            position: relative;
+            z-index: 1;
+        }
         .section-card {
-            background-color: #1f2937;
+            background-color: rgba(31, 41, 55, 0.8); /* Semi-transparent card */
+            backdrop-filter: blur(10px); /* Frosted glass effect */
+            -webkit-backdrop-filter: blur(10px);
             border-radius: 1rem;
             border: 1px solid #374151;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
@@ -51,12 +68,22 @@
             transform: translateY(-5px);
             box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
         }
+        header {
+             background-color: rgba(12, 10, 25, 0.7);
+             backdrop-filter: blur(10px);
+             -webkit-backdrop-filter: blur(10px);
+             position: sticky;
+             top: 0;
+             z-index: 10;
+        }
         .youtube-link:hover i {
             color: #FF0000; /* Red for YouTube */
         }
     </style>
 </head>
 <body class="antialiased">
+
+    <canvas id="bg-canvas"></canvas>
 
     <!-- Header -->
     <header class="py-6 px-4 sm:px-6 lg:px-8">
@@ -76,7 +103,7 @@
             </div>
         </nav>
         <!-- Mobile Menu -->
-        <div id="mobile-menu" class="hidden md:hidden mt-4">
+        <div id="mobile-menu" class="hidden md:hidden mt-4 bg-gray-900/90 rounded-lg py-2">
             <a href="#about" class="block py-2 text-center nav-link">About</a>
             <a href="#projects" class="block py-2 text-center nav-link">Projects</a>
             <a href="#contact" class="block py-2 text-center nav-link">Contact</a>
@@ -84,7 +111,7 @@
     </header>
 
     <!-- Hero Section -->
-    <main class="container mx-auto px-4 sm:px-6 lg:px-8 py-20 text-center">
+    <main class="content-section container mx-auto px-4 sm:px-6 lg:px-8 py-20 text-center">
         <h1 class="text-5xl md:text-7xl font-black mb-4">
             <span class="text-purple-glow">Auth</span><span class="text-cyan-glow">Bean</span>
         </h1>
@@ -93,7 +120,7 @@
     </main>
 
     <!-- About Section -->
-    <section id="about" class="py-20 bg-gray-900/50">
+    <section id="about" class="content-section py-20">
         <div class="container mx-auto px-4 sm:px-6 lg:px-8">
             <div class="section-card p-8 md:p-12 max-w-4xl mx-auto">
                 <h2 class="text-4xl font-bold text-center mb-8">About Me</h2>
@@ -105,7 +132,7 @@
     </section>
 
     <!-- Projects Section -->
-    <section id="projects" class="py-20">
+    <section id="projects" class="content-section py-20">
         <div class="container mx-auto px-4 sm:px-6 lg:px-8">
             <h2 class="text-4xl font-bold text-center mb-12">Current Project</h2>
             <div class="section-card p-8 md:p-12 max-w-4xl mx-auto flex flex-col md:flex-row items-center gap-8">
@@ -129,7 +156,7 @@
     </section>
 
     <!-- Contact Section -->
-    <section id="contact" class="py-20 bg-gray-900/50">
+    <section id="contact" class="content-section py-20">
         <div class="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
              <div class="section-card p-8 md:p-12 max-w-2xl mx-auto">
                 <h2 class="text-4xl font-bold mb-4">Get In Touch</h2>
@@ -142,7 +169,7 @@
     </section>
 
     <!-- Footer -->
-    <footer class="py-8">
+    <footer class="content-section py-8">
         <div class="container mx-auto px-4 sm:px-6 lg:px-8 text-center text-gray-400">
             <div class="flex justify-center items-center space-x-6 mb-4">
                 <a href="https://github.com/signalbean" target="_blank" rel="noopener noreferrer" class="nav-link text-2xl"><i class="fab fa-github"></i></a>
@@ -157,13 +184,111 @@
     </footer>
     
     <script>
-        // Simple script for mobile menu toggle
+        // --- Mobile Menu Toggle ---
         const menuBtn = document.getElementById('menu-btn');
         const mobileMenu = document.getElementById('mobile-menu');
 
         menuBtn.addEventListener('click', () => {
             mobileMenu.classList.toggle('hidden');
         });
+
+        // --- Three.js Starfield Background ---
+        let scene, camera, renderer, starLayers = [];
+        let mouseX = 0;
+        let mouseY = 0;
+
+        function init() {
+            // Scene setup
+            scene = new THREE.Scene();
+            
+            // Camera setup
+            camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 1, 1000);
+            camera.position.z = 5;
+            
+            // Renderer setup
+            renderer = new THREE.WebGLRenderer({
+                canvas: document.querySelector('#bg-canvas'),
+                alpha: true
+            });
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            
+            // --- Star Layer Creation ---
+            const layers = [
+                { count: 5000, size: 0.7, color: 0xffffff, speed: 0.00008 }, // Small, distant stars
+                { count: 3000, size: 1.2, color: 0xaaaaff, speed: 0.00005 }, // Medium, bluish stars
+                { count: 500,  size: 2.0, color: 0xffaaaa, speed: 0.00002 }  // Large, reddish, closer stars
+            ];
+
+            layers.forEach(layerInfo => {
+                const starGeometry = new THREE.BufferGeometry();
+                const starVertices = [];
+                for (let i = 0; i < layerInfo.count; i++) {
+                    const x = (Math.random() - 0.5) * 2000;
+                    const y = (Math.random() - 0.5) * 2000;
+                    const z = (Math.random() - 0.5) * 2000;
+                    starVertices.push(x, y, z);
+                }
+                starGeometry.setAttribute('position', new THREE.Float32BufferAttribute(starVertices, 3));
+                
+                const starMaterial = new THREE.PointsMaterial({
+                    color: layerInfo.color,
+                    size: layerInfo.size,
+                    transparent: true,
+                    opacity: 0.8,
+                    sizeAttenuation: true
+                });
+
+                const stars = new THREE.Points(starGeometry, starMaterial);
+                stars.rotation.x = Math.random() * Math.PI;
+                stars.rotation.y = Math.random() * Math.PI;
+                stars.rotation.z = Math.random() * Math.PI;
+                
+                starLayers.push({ points: stars, speed: layerInfo.speed });
+                scene.add(stars);
+            });
+
+            // Event Listeners
+            document.body.addEventListener('mousemove', onMouseMove);
+            window.addEventListener('resize', onWindowResize, false);
+
+            // Start animation loop
+            animate();
+        }
+
+        function animate() {
+            requestAnimationFrame(animate);
+            const time = Date.now();
+
+            // Animate each star layer
+            starLayers.forEach((layer, index) => {
+                // Constant random rotation
+                layer.points.rotation.y += layer.speed;
+                layer.points.rotation.x += layer.speed / 2;
+                
+                // Twinkling effect by animating opacity
+                layer.points.material.opacity = 0.6 + Math.sin(time * 0.0005 * (index + 1)) * 0.2;
+            });
+            
+            // Smoother parallax effect from mouse
+            camera.position.x += (mouseX * 2 - camera.position.x) * 0.02;
+            camera.position.y += (-mouseY * 2 - camera.position.y) * 0.02;
+            camera.lookAt(scene.position);
+
+            renderer.render(scene, camera);
+        }
+
+        function onWindowResize() {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        }
+
+        function onMouseMove(event) {
+            mouseX = (event.clientX - window.innerWidth / 2) / (window.innerWidth / 2);
+            mouseY = (event.clientY - window.innerHeight / 2) / (window.innerHeight / 2);
+        }
+
+        init();
     </script>
 </body>
 </html>
