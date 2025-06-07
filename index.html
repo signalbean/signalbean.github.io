@@ -34,15 +34,20 @@
             color: #c084fc;
              text-shadow: 0 0 8px rgba(192, 132, 252, 0.6);
         }
+        @keyframes gradient-loop {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
         .btn-primary {
             background-image: linear-gradient(to right, #a855f7 0%, #22d3ee 51%, #a855f7 100%);
             background-size: 200% auto;
             color: white;
             transition: all 0.5s ease;
             box-shadow: 0 0 20px rgba(168, 85, 247, 0.5);
+            animation: gradient-loop 4s ease infinite;
         }
         .btn-primary:hover {
-            background-position: right center;
             transform: translateY(-2px);
             box-shadow: 0 0 30px rgba(34, 211, 238, 0.5), 0 0 30px rgba(168, 85, 247, 0.5);
         }
@@ -158,9 +163,9 @@
              <div class="section-card p-8 md:p-12 max-w-2xl mx-auto">
                 <h2 class="text-4xl font-bold mb-4">Get In Touch</h2>
                 <p class="text-lg text-gray-300 mb-8">I'm always open to discussing new projects or collaboration opportunities. Feel free to reach out!</p>
-                <a href="https://mail.google.com/mail/#inbox?compose=new" target="_blank" rel="noopener noreferrer" class="btn-primary font-bold py-3 px-8 rounded-full text-lg inline-block">
+                <div class="btn-primary font-bold py-3 px-8 rounded-full text-lg inline-block pointer-events-none">
                     <i class="fas fa-envelope mr-2"></i> signalbean@gmail.com
-                </a>
+                </div>
             </div>
         </div>
     </section>
@@ -277,6 +282,7 @@
                 layer.points.material.opacity = 0.8 + Math.sin(time * 0.0005 * (index + 1)) * 0.2;
             });
             
+            camera.rotation.z += 0.00005;
             camera.position.x += (mouseX * 2 - camera.position.x) * 0.02;
             camera.position.y += (-mouseY * 2 - camera.position.y) * 0.02;
             camera.lookAt(scene.position);
