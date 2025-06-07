@@ -6,98 +6,109 @@
     <title>signalbean | Developer</title>
     <link rel="icon" type="image/png" href="icon.png">
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <style>
         html {
             scroll-behavior: smooth;
         }
+        @keyframes aurora-bg {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #0c0a19;
-            color: #E5E7EB;
+            background-color: #FDF2F8; /* Light Pink Background */
+            color: #5D3A4B; /* Dark Maroon/Brown Text */
             overflow-x: hidden;
         }
-        #bg-canvas {
+        body::before {
+            content: '';
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
             z-index: -1;
+            background: linear-gradient(125deg, #F9A8D4, #FDF2F8, #A36A81, #FDF2F8);
+            background-size: 400% 400%;
+            animation: aurora-bg 16s ease infinite;
         }
-        .text-cyan-glow {
-            color: #22d3ee;
-            text-shadow: 0 0 8px rgba(34, 211, 238, 0.6);
+        .text-pink-glow {
+            color: #F472B6;
+            text-shadow: 0 0 10px rgba(244, 114, 182, 0.6);
         }
-        .text-purple-glow {
-            color: #c084fc;
-             text-shadow: 0 0 8px rgba(192, 132, 252, 0.6);
+        .text-dark-glow {
+            color: #7B3F5C;
+            text-shadow: 0 0 10px rgba(123, 63, 92, 0.6);
         }
-        @keyframes gradient-loop {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
+        @keyframes paint-mix {
+          0% { background-position: 0% 80%, 100% 20%, 50% 50%; }
+          25% { background-position: 20% 0%, 80% 80%, 30% 70%; }
+          50% { background-position: 100% 100%, 0% 0%, 80% 20%; }
+          75% { background-position: 80% 20%, 20% 100%, 10% 10%; }
+          100% { background-position: 0% 80%, 100% 20%, 50% 50%; }
         }
-        .btn-primary {
-            background-image: linear-gradient(to right, #a855f7 0%, #22d3ee 51%, #a855f7 100%);
-            background-size: 200% auto;
+        .btn-aurora {
+            padding: 0.75rem 2rem;
+            font-weight: bold;
             color: white;
-            transition: all 0.5s ease;
-            box-shadow: 0 0 20px rgba(168, 85, 247, 0.5);
-            animation: gradient-loop 4s ease infinite;
+            border-radius: 9999px;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            background:
+                radial-gradient(circle at center, rgba(249, 168, 212, 0.8) 0%, transparent 40%),
+                radial-gradient(circle at center, rgba(123, 63, 92, 0.8) 0%, transparent 50%);
+            background-color: #5D3A4B;
+            background-size: 400% 400%;
+            background-blend-mode: screen;
+            animation: paint-mix 12s ease-in-out infinite;
         }
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 0 30px rgba(34, 211, 238, 0.5), 0 0 30px rgba(168, 85, 247, 0.5);
-        }
-        .btn-primary:active {
-            transform: translateY(1px);
+        .btn-aurora:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
         }
         .nav-link {
             transition: color 0.3s ease;
         }
         .nav-link:hover {
-            color: #22d3ee;
+            color: #F472B6;
         }
         .content-section {
             position: relative;
             z-index: 1;
         }
         .section-card {
-            background-color: rgba(31, 41, 55, 0.8);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
+            background-color: rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
             border-radius: 1rem;
-            border: 1px solid #374151;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
-        .section-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-        }
         header {
-             background-color: rgba(12, 10, 25, 0.7);
-             backdrop-filter: blur(10px);
-             -webkit-backdrop-filter: blur(10px);
+             background-color: rgba(253, 242, 248, 0.7);
+             backdrop-filter: blur(12px);
+             -webkit-backdrop-filter: blur(12px);
              position: sticky;
              top: 0;
              z-index: 10;
         }
-        .youtube-link:hover i {
-            color: #FF0000;
-        }
+        .youtube-link:hover i { color: #FF0000; }
+        .fa-github:hover { color: #333; }
+        .fa-discord:hover { color: #7B3F5C; }
     </style>
 </head>
 <body class="antialiased">
 
-    <canvas id="bg-canvas"></canvas>
-
     <header class="py-6 px-4 sm:px-6 lg:px-8">
         <nav class="flex justify-between items-center">
             <div class="text-2xl font-bold">
-                <span class="text-purple-glow">signal</span><span class="text-cyan-glow">bean</span>
+                <span class="text-pink-glow">signal</span><span class="text-dark-glow">bean</span>
             </div>
             <div class="hidden md:flex items-center space-x-8">
                 <a href="#about" class="nav-link text-lg">About</a>
@@ -105,12 +116,12 @@
                 <a href="#contact" class="nav-link text-lg">Contact</a>
             </div>
              <div class="md:hidden">
-                <button id="menu-btn" class="text-white focus:outline-none">
+                <button id="menu-btn" class="focus:outline-none">
                     <i class="fas fa-bars text-2xl"></i>
                 </button>
             </div>
         </nav>
-        <div id="mobile-menu" class="hidden md:hidden mt-4 bg-gray-900/90 rounded-lg py-2">
+        <div id="mobile-menu" class="hidden md:hidden mt-4 bg-white/80 rounded-lg py-2">
             <a href="#about" class="block py-2 text-center nav-link">About</a>
             <a href="#projects" class="block py-2 text-center nav-link">Projects</a>
             <a href="#contact" class="block py-2 text-center nav-link">Contact</a>
@@ -119,18 +130,18 @@
 
     <main class="content-section container mx-auto px-4 sm:px-6 lg:px-8 py-20 text-center">
         <h1 class="text-5xl md:text-7xl font-black mb-4">
-            <span class="text-purple-glow">Auth</span><span class="text-cyan-glow">Bean</span>
+            <span class="text-pink-glow">Auth</span><span class="text-dark-glow">Bean</span>
         </h1>
-        <p class="text-xl md:text-2xl text-gray-300 mb-8">A modern, secure authenticator app in the making.</p>
-        <a href="#projects" class="btn-primary font-bold py-3 px-8 rounded-full text-lg inline-block">See My Work</a>
+        <p class="text-xl md:text-2xl text-gray-600 mb-8">A modern, secure authenticator app in the making.</p>
+        <a href="#projects" class="btn-aurora inline-block">See My Work</a>
     </main>
 
     <section id="about" class="content-section py-20">
         <div class="container mx-auto px-4 sm:px-6 lg:px-8">
             <div class="section-card p-8 md:p-12 max-w-4xl mx-auto">
                 <h2 class="text-4xl font-bold text-center mb-8">About Me</h2>
-                <p class="text-lg text-gray-300 leading-relaxed text-center">
-                    I'm <span class="font-bold text-purple-glow">signalbean</span>, a passionate developer focused on creating clean, efficient, and user-friendly applications. My current focus is on building robust security solutions, starting with my latest project, <span class="font-bold text-cyan-glow">AuthBean</span>. I'm always eager to learn new technologies and improve my craft.
+                <p class="text-lg leading-relaxed text-center">
+                    I'm <span class="font-bold text-pink-glow">signalbean</span>, a passionate developer focused on creating clean, efficient, and user-friendly applications. My current focus is on building robust security solutions, starting with my latest project, <span class="font-bold text-dark-glow">AuthBean</span>. I'm always eager to learn new technologies and improve my craft.
                 </p>
             </div>
         </div>
@@ -142,18 +153,18 @@
             <div class="section-card p-8 md:p-12 max-w-4xl mx-auto flex flex-col md:flex-row items-center gap-8">
                 <div class="md:w-1/3 text-center">
                      <div class="text-8xl">
-                        <i class="fas fa-shield-alt text-purple-glow"></i>
+                        <i class="fas fa-shield-alt text-pink-glow"></i>
                     </div>
                 </div>
                 <div class="md:w-2/3">
-                    <h3 class="text-3xl font-bold mb-3"><span class="text-purple-glow">Auth</span><span class="text-cyan-glow">Bean</span></h3>
-                    <p class="text-gray-400 mb-4">A web-based authenticator app designed for simplicity and security, with plans for an Android version. It aims to provide a seamless two-factor authentication experience across devices.</p>
+                    <h3 class="text-3xl font-bold mb-3"><span class="text-pink-glow">Auth</span><span class="text-dark-glow">Bean</span></h3>
+                    <p class="text-gray-500 mb-4">A web-based authenticator app designed for simplicity and security, with plans for an Android version. It aims to provide a seamless two-factor authentication experience across devices.</p>
                     <div class="flex flex-wrap gap-2 mb-4">
-                        <span class="bg-purple-500/20 text-purple-300 text-sm font-medium px-2.5 py-0.5 rounded-full">Web App</span>
-                        <span class="bg-cyan-500/20 text-cyan-300 text-sm font-medium px-2.5 py-0.5 rounded-full">Android (Planned)</span>
-                        <span class="bg-gray-500/20 text-gray-300 text-sm font-medium px-2.5 py-0.5 rounded-full">Security</span>
+                        <span class="bg-pink-100 text-pink-700 text-sm font-medium px-2.5 py-0.5 rounded-full">Web App</span>
+                        <span class="bg-rose-100 text-rose-800 text-sm font-medium px-2.5 py-0.5 rounded-full">Android (Planned)</span>
+                        <span class="bg-gray-200 text-gray-700 text-sm font-medium px-2.5 py-0.5 rounded-full">Security</span>
                     </div>
-                    <a href="https://github.com/signalbean/AuthBean" target="_blank" rel="noopener noreferrer" class="text-cyan-400 hover:text-cyan-300 transition-colors duration-300 font-semibold">View on GitHub <i class="fas fa-arrow-right ml-1"></i></a>
+                    <a href="https://github.com/signalbean/AuthBean" target="_blank" rel="noopener noreferrer" class="font-semibold text-rose-800 hover:text-pink-500 transition-colors duration-300">View on GitHub <i class="fas fa-arrow-right ml-1"></i></a>
                 </div>
             </div>
         </div>
@@ -163,8 +174,8 @@
         <div class="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
              <div class="section-card p-8 md:p-12 max-w-2xl mx-auto">
                 <h2 class="text-4xl font-bold mb-4">Get In Touch</h2>
-                <p class="text-lg text-gray-300 mb-8">I'm always open to discussing new projects or collaboration opportunities. Feel free to reach out!</p>
-                <div class="btn-primary font-bold py-3 px-8 rounded-full text-lg inline-block pointer-events-none">
+                <p class="text-lg text-gray-600 mb-8">I'm always open to discussing new projects or collaboration opportunities. Feel free to reach out!</p>
+                <div class="btn-aurora inline-block pointer-events-none">
                     <i class="fas fa-envelope mr-2"></i> signalbean@gmail.com
                 </div>
             </div>
@@ -172,16 +183,16 @@
     </section>
 
     <footer class="content-section py-8">
-        <div class="container mx-auto px-4 sm:px-6 lg:px-8 text-center text-gray-400">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8 text-center text-gray-500">
             <div class="flex justify-center items-center space-x-6 mb-4">
                 <a href="https://github.com/signalbean" target="_blank" rel="noopener noreferrer" class="nav-link text-2xl"><i class="fab fa-github"></i></a>
                 <div class="flex items-center group cursor-default">
-                    <i class="fab fa-discord text-2xl group-hover:text-purple-400 transition-colors duration-300"></i>
+                    <i class="fab fa-discord text-2xl"></i>
                     <span class="ml-2 text-lg">signalbean</span>
                 </div>
                 <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" target="_blank" rel="noopener noreferrer" class="nav-link text-2xl youtube-link"><i class="fab fa-youtube"></i></a>
             </div>
-            <p>Copyright &copy; 2025 - <span class="font-semibold text-purple-glow">signalbean</span>. All rights reserved.</p>
+            <p>Copyright &copy; 2025 - <span class="font-semibold text-pink-glow">signalbean</span>. All rights reserved.</p>
         </div>
     </footer>
     
@@ -201,108 +212,6 @@
                 });
             });
         });
-
-        let scene, camera, renderer, starLayers = [];
-        let mouseX = 0;
-        let mouseY = 0;
-
-        function createCircleTexture(color, size) {
-            const matCanvas = document.createElement('canvas');
-            matCanvas.width = matCanvas.height = size;
-            const matContext = matCanvas.getContext('2d');
-            const texture = new THREE.Texture(matCanvas);
-            const center = size / 2;
-            matContext.beginPath();
-            matContext.arc(center, center, size/2, 0, 2 * Math.PI, false);
-            matContext.closePath();
-            matContext.fillStyle = color;
-            matContext.fill();
-            texture.needsUpdate = true;
-            return texture;
-        }
-
-        function init() {
-            scene = new THREE.Scene();
-            camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 1, 1000);
-            camera.position.z = 5;
-            
-            renderer = new THREE.WebGLRenderer({
-                canvas: document.querySelector('#bg-canvas'),
-                alpha: true
-            });
-            renderer.setSize(window.innerWidth, window.innerHeight);
-            
-            const layers = [
-                { count: 6000, size: 1.5, color: '#ffffff', speed: 0.00008 },
-                { count: 4000, size: 2.5, color: '#aaaaff', speed: 0.00005 },
-                { count: 1000,  size: 4.0, color: '#ffaaaa', speed: 0.00002 }
-            ];
-
-            layers.forEach(layerInfo => {
-                const starGeometry = new THREE.BufferGeometry();
-                const starVertices = [];
-                for (let i = 0; i < layerInfo.count; i++) {
-                    const x = (Math.random() - 0.5) * 2000;
-                    const y = (Math.random() - 0.5) * 2000;
-                    const z = (Math.random() - 0.5) * 2000;
-                    starVertices.push(x, y, z);
-                }
-                starGeometry.setAttribute('position', new THREE.Float32BufferAttribute(starVertices, 3));
-                
-                const starMaterial = new THREE.PointsMaterial({
-                    map: createCircleTexture(layerInfo.color, 256),
-                    size: layerInfo.size,
-                    transparent: true,
-                    opacity: 1.0,
-                    alphaTest: 0.5,
-                    sizeAttenuation: true
-                });
-
-                const stars = new THREE.Points(starGeometry, starMaterial);
-                stars.rotation.x = Math.random() * Math.PI;
-                stars.rotation.y = Math.random() * Math.PI;
-                stars.rotation.z = Math.random() * Math.PI;
-                
-                starLayers.push({ points: stars, speed: layerInfo.speed });
-                scene.add(stars);
-            });
-
-            document.body.addEventListener('mousemove', onMouseMove);
-            window.addEventListener('resize', onWindowResize, false);
-
-            animate();
-        }
-
-        function animate() {
-            requestAnimationFrame(animate);
-            const time = Date.now();
-
-            starLayers.forEach((layer, index) => {
-                layer.points.rotation.y += layer.speed;
-                layer.points.rotation.x += layer.speed / 2;
-                layer.points.material.opacity = 0.8 + Math.sin(time * 0.0005 * (index + 1)) * 0.2;
-            });
-            
-            camera.rotation.z += 0.00005;
-            camera.position.x += (mouseX * 2 - camera.position.x) * 0.02;
-            camera.position.y += (-mouseY * 2 - camera.position.y) * 0.02;
-            camera.lookAt(scene.position);
-
-            renderer.render(scene, camera);
-        }
-
-        function onWindowResize() {
-            camera.aspect = window.innerWidth / window.innerHeight;
-            camera.updateProjectionMatrix();
-            renderer.setSize(window.innerWidth, window.innerHeight);
-        }
-
-        function onMouseMove(event) {
-            mouseX = (event.clientX - window.innerWidth / 2) / (window.innerWidth / 2);
-            mouseY = (event.clientY - window.innerHeight / 2) / (window.innerHeight / 2);
-        }
-
-        init();
     </script>
 </body>
 </html>
