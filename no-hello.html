@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>No Hello</title>
+    <link rel="icon" type="image/png" href="icon.png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <style>
+        html {
+            scroll-behavior: smooth;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0F172A; /* Slate-900 Background */
+            color: #E2E8F0; /* Slate-200 Text */
+        }
+        .section-card {
+            background-color: rgba(30, 41, 59, 0.7); /* Slate-800 with opacity */
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: 1rem;
+            border: 1px solid #334155; /* Slate-700 border */
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+        }
+        .chat-bubble {
+            padding: 0.75rem 1rem;
+            border-radius: 1rem;
+            max-width: 80%;
+            margin-bottom: 0.5rem;
+        }
+        .chat-bad {
+            background-color: #334155; /* Slate-700 */
+            color: #E2E8F0; /* Slate-200 */
+            align-self: flex-start;
+        }
+        .chat-good {
+            background-color: #3B82F6;
+            color: white;
+            align-self: flex-end;
+        }
+        .chat-container {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            padding: 1rem;
+            background-color: #1E293B; /* Slate-800 */
+            border-radius: 0.5rem;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <div class="content-section container mx-auto px-4 sm:px-6 lg:px-8 py-16">
+
+        <header class="text-center mb-16">
+            <h1 class="text-5xl md:text-7xl font-bold text-blue-400 mb-2">No "Hello"</h1>
+            <p class="text-xl text-slate-300">Please don't just say hello in chat</p>
+            <p class="text-lg text-slate-400 mt-4 max-w-2xl mx-auto">Imagine calling someone, saying <em>"hello!"</em> then immediately putting them on hold... That's what you're doing.</p>
+        </header>
+
+        <div class="grid md:grid-cols-2 gap-12">
+            
+            <!-- Bad Example -->
+            <section id="bad">
+                <div class="section-card p-8">
+                    <h2 class="text-3xl font-bold text-center mb-6 text-red-500">❌ Don't Do This</h2>
+                    <div class="chat-container mb-6">
+                        <div class="chat-bubble chat-bad">hi</div>
+                        <div class="text-slate-400 text-xs text-center my-2">... 4 minutes later ...</div>
+                        <div class="chat-bubble chat-good">...?</div>
+                         <div class="chat-bubble chat-bad">what time was that thing again?</div>
+                         <div class="chat-bubble chat-good">oh - 3:30</div>
+                    </div>
+                    <p class="text-slate-300 leading-relaxed">
+                        People who do this are trying to be polite, but it's counter-productive. Typing is slower than talking. Despite best intentions, you're actually just making the other person wait for you to phrase your question, which is lost productivity.
+                    </p>
+                    <p class="text-slate-300 leading-relaxed mt-4">
+                        The same goes for "u there?", "quick question...", or "ping".
+                    </p>
+                </div>
+            </section>
+
+            <!-- Good Example -->
+            <section id="good">
+                 <div class="section-card p-8">
+                    <h2 class="text-3xl font-bold text-center mb-6 text-green-400">✅ Instead, Try This</h2>
+                     <div class="chat-container mb-6">
+                        <div class="chat-bubble chat-bad">Hiya! What time was that thing?</div>
+                        <div class="chat-bubble chat-good">hey, 3:30</div>
+                        <div class="chat-bubble chat-bad">Thanks!</div>
+                    </div>
+                    <p class="text-slate-300 leading-relaxed">
+                        Just ask the question! If you feel it's a bit brusque, you can still add pleasantries. The important thing is getting to the point.
+                    </p>
+                     <p class="text-slate-300 leading-relaxed mt-4">
+                        This also allows for **asynchronous communication**. If the other person is away, they can still answer your question when they return, instead of just staring at a "Hello" and wondering what they missed. When done right - everyone's happy! 🎉
+                    </p>
+                </div>
+            </section>
+        </div>
+
+        <footer class="text-center mt-16 text-slate-500 text-sm">
+            <p>Based on the wonderful <a href="https://nohello.net" target="_blank" rel="noopener noreferrer" class="text-blue-400 hover:underline">nohello.net</a> and <a href="https://nohello.com" target="_blank" rel="noopener noreferrer" class="text-blue-400 hover:underline">nohello.com</a></p>
+             <p class="mt-4"><a href="index.html" class="text-blue-400 hover:underline">&larr; Back to main site</a></p>
+        </footer>
+
+    </div>
+    
+</body>
+</html>
