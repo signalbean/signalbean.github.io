@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Sandbox – SignalBean</title>
+  <link rel="icon" href="../assets/icon.png" type="image/png">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      margin: 0;
+      padding: 2rem;
+      font-family: 'Fira Code', monospace;
+      color: #00ffcc;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      background: linear-gradient(45deg, #111, #1a1a1a, #111);
+      background-size: 400% 400%;
+      animation: gradientBG 15s ease infinite;
+    }
+    @keyframes gradientBG {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+    a { color: #55ffff; text-decoration: none; transition: color 0.3s; }
+    a:hover { color: #ffffff; text-shadow: 0 0 5px #55ffff; }
+    .container { max-width: 800px; text-align: center; }
+    h1, h3 { text-shadow: 0 0 8px #00ffcc; }
+    .section { margin-bottom: 2.5rem; }
+    ul { list-style: none; padding: 0; }
+    li { margin-bottom: 0.5rem; }
+    img { border-radius: 20px; width: 120px; height: 120px; object-fit: cover; margin-bottom: 1rem; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>SANDBOX</h1>
+    <p>Dev toys, bot humor, booru side quests.</p>
+    <ul>
+      <li><a href="tokengen">Fake Token Generator</a></li>
+      <li><a href="terminal">Terminal Boot</a></li>
+      <li><a href="nsfwtags">NSFW Tag Combiner</a></li>
+      <li><a href="ping">Ping Simulator</a></li>
+      <li><a href="usernamegen">Random Username Generator</a></li>
+      <li><a href="base64">Base64 Encode/Decode</a></li>
+    </ul>
+    <a href="/">← Back</a>
+  </div>
+</body>
+</html>

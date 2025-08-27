@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Base64 Encoder/Decoder</title>
+  <link rel="icon" href="../assets/icon.png" type="image/png">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      margin: 0;
+      padding: 2rem;
+      font-family: 'Fira Code', monospace;
+      color: #00ffcc;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      background: linear-gradient(45deg, #111, #1a1a1a, #111);
+      background-size: 400% 400%;
+      animation: gradientBG 15s ease infinite;
+    }
+    @keyframes gradientBG {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+    a { color: #55ffff; text-decoration: none; transition: color 0.3s; }
+    a:hover { color: #ffffff; text-shadow: 0 0 5px #55ffff; }
+    .container { max-width: 800px; text-align: center; }
+    h1, h3 { text-shadow: 0 0 8px #00ffcc; }
+    .section { margin-bottom: 2.5rem; }
+    ul { list-style: none; padding: 0; }
+    li { margin-bottom: 0.5rem; }
+    img { border-radius: 20px; width: 120px; height: 120px; object-fit: cover; margin-bottom: 1rem; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Base64 Encoder / Decoder</h1>
+    <button onclick="toggleMode()">Mode: <span id="modeLabel">Encode</span></button>
+    <input type="text" id="inputBox" placeholder="type something..." oninput="process()" />
+    <pre id="output">waiting...</pre>
+    <p style="margin-top: 2rem;"><a href="info">← Back</a></p>
+  </div>
+
+  <script>
+    let mode = 'encode';
+
+    function toggleMode() {
+      mode = mode === 'encode' ? 'decode' : 'encode';
+      document.getElementById('modeLabel').innerText = mode.charAt(0).toUpperCase() + mode.slice(1);
+      process(); // reprocess existing input
+    }
+
+    function process() {
+      const input = document.getElementById('inputBox').value;
+      const output = document.getElementById('output');
+      if (!input) return output.textContent = 'waiting...';
+      try {
+        if (mode === 'encode') {
+          output.textContent = btoa(input);
+        } else {
+          output.textContent = atob(input);
+        }
+      } catch (e) {
+        output.textContent = '⚠️ invalid input';
+      }
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Username Generator</title>
+  <link rel="icon" href="../assets/icon.png" type="image/png">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      margin: 0;
+      padding: 2rem;
+      font-family: 'Fira Code', monospace;
+      color: #00ffcc;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      background: linear-gradient(45deg, #111, #1a1a1a, #111);
+      background-size: 400% 400%;
+      animation: gradientBG 15s ease infinite;
+    }
+    @keyframes gradientBG {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+    a { color: #55ffff; text-decoration: none; transition: color 0.3s; }
+    a:hover { color: #ffffff; text-shadow: 0 0 5px #55ffff; }
+    .container { max-width: 800px; text-align: center; }
+    h1, h3 { text-shadow: 0 0 8px #00ffcc; }
+    .section { margin-bottom: 2.5rem; }
+    ul { list-style: none; padding: 0; }
+    li { margin-bottom: 0.5rem; }
+    img { border-radius: 20px; width: 120px; height: 120px; object-fit: cover; margin-bottom: 1rem; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Fake Username</h1>
+    <p id="username">[ click generate ]</p>
+    <button onclick="genUser()">Generate</button>
+    <p style="margin-top: 2rem;"><a href="info">← Back</a></p>
+  </div>
+
+  <script>
+    const names = [
+    'bean', 'signal', 'ghost', 'wisp', 'null', 'fuzz', 'sleepy', 'kitsu',
+    'void', 'crash', 'baka', 'sock', 'glitch', 'byte', 'miso', 'luna',
+    'zap', 'static', 'nova', 'zen', 'noodle', 'pico', 'pixel', 'scrap',
+    'echo', 'cypher', 'blink', 'muffin', 'snip', 'dusty', 'cloud', 'mochi',
+    'bitty', 'ash', 'drift', 'zero', 'loop', 'quark', 'shade', 'nix'
+    ];
+    const suffixes = [
+    'lol', 'dev', 'ts', 'exe', '404', 'chan', 'bot', 'owo',
+    'wav', 'ai', 'sys', 'zip', 'dat', 'cmd', 'v2', 'tv',
+    'rawr', 'zzz', 'qt', 'x', 'byte', 'js', 'irl', 'me',
+    'api', 'null', 'iso', 'src', 'vibe', 'rx', 'io', 'nya'
+    ];
+
+
+    function genUser() {
+      const user = `${pick(names)}_${pick(suffixes)}`;
+      document.getElementById('username').innerText = `${user}`;
+    }
+
+    function pick(arr) {
+      return arr[Math.floor(Math.random() * arr.length)];
+    }
+  </script>
+</body>
+</html>
