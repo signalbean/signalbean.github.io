@@ -1,93 +1,244 @@
-<!doctype html>
-<html lang="en">
+<!DOCTYPE html>
+<html lang="en" class="dark">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Signal Bean - Home</title>
-  <link rel="icon" href="assets/icon.png" type="image/png">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signal Bean - Home</title>
+    <link rel="icon" href="https://avatars.githubusercontent.com/u/157260218" type="image/png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #7b1f52;
+            --secondary-color: #a72d62;
+            --accent-color: #d182a0;
+            --bg-color-dark: #1a1a1a;
+            --text-color-light: #e0e0e0;
+        }
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&display=swap" rel="stylesheet">
+        body {
+            font-family: 'Fira Code', monospace;
+            background-color: var(--bg-color-dark);
+            color: var(--text-color-light);
+            cursor: none !important;
+            overflow-y: scroll;
+        }
+        
+        .dark .bg-primary {
+            background-color: var(--primary-color);
+        }
+        .dark .text-primary {
+            color: var(--primary-color);
+        }
+        .dark .bg-secondary {
+            background-color: var(--secondary-color);
+        }
+        .dark .text-secondary {
+            color: var(--secondary-color);
+        }
+        .dark .bg-accent {
+            background-color: var(--accent-color);
+        }
+        .dark .text-accent {
+            color: var(--accent-color);
+        }
+        .dark .border-primary {
+            border-color: var(--primary-color);
+        }
+        .dark .border-secondary {
+            border-color: var(--secondary-color);
+        }
+        .card {
+            background-color: #2a2a2a;
+            border: 1px solid #333;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s, box-shadow 0.2s;
+            cursor: none !important;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
+        }
+        a {
+            cursor: none !important;
+        }
 
-  <style>
-    body {
-      margin: 0;
-      padding: 2rem;
-      font-family: 'Fira Code', monospace;
-      color: #00ffcc;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-      background: linear-gradient(45deg, #111, #1a1a1a, #111);
-      background-size: 400% 400%;
-      animation: gradientBG 15s ease infinite;
-    }
-    @keyframes gradientBG {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
-    }
-    a {
-      color: #55ffff;
-      text-decoration: none;
-      transition: color 0.3s;
-    }
-    a:hover {
-      color: #ffffff;
-      text-shadow: 0 0 5px #55ffff;
-    }
-    .container {
-      max-width: 800px;
-      text-align: center;
-    }
-    h1, h3 {
-      text-shadow: 0 0 8px #00ffcc;
-    }
-    .section {
-      margin-bottom: 2.5rem;
-    }
-    ul {
-      list-style: none;
-      padding: 0;
-    }
-    li {
-      margin-bottom: 0.5rem;
-    }
-    img {
-      border-radius: 20px;
-      width: 120px;
-      height: 120px;
-      object-fit: cover;
-      margin-bottom: 1rem;
-    }
-  </style>
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #2a2a2a;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--secondary-color);
+            border-radius: 5px;
+            border: 2px solid #2a2a2a;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--accent-color);
+        }
+
+        .cursor-follower {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 20px;
+            height: 20px;
+            background-color: var(--accent-color);
+            border-radius: 50%;
+            pointer-events: none;
+            opacity: 0.7;
+            transform: translate(-50%, -50%);
+            z-index: 9999;
+        }
+        .cursor-follower.active {
+            width: 40px;
+            height: 40px;
+            opacity: 0.9;
+            background-color: var(--secondary-color);
+            transition: width 0.3s ease-out, height 0.3s ease-out, background-color 0.3s ease-out;
+        }
+    </style>
 </head>
-<body>
-  <div class="container">
-    <img src="assets/icon.png" alt="Signal Bean">
-    <h1>Signal Bean</h1>
-    <div>Typescript dev - co-owner vibes</div>
-    <div style="font-size: 0.9rem; margin-bottom: 2rem;">
-      signalbean@gmail.com -
-      <a href="https://github.com/signalbean" target="_blank">github/signalbean</a>
+<body class="bg-gray-900 text-gray-200">
+    <div class="cursor-follower"></div>
+
+    <div class="container mx-auto p-8 max-w-5xl">
+
+        <header class="text-center mb-12">
+            <div class="relative w-32 h-32 mx-auto mb-4 rounded-full overflow-hidden border-4 border-secondary">
+                <img src="https://avatars.githubusercontent.com/u/157260218" alt="Profile Picture" class="w-full h-full object-cover">
+            </div>
+            <h1 class="text-4xl font-bold mb-2 text-accent">signalbean</h1>
+            <p class="text-lg text-gray-400">Software Developer | Discord/Android Apps | Web Servers</p>
+        </header>
+
+        <section class="mb-12">
+            <h2 class="text-3xl font-bold text-accent mb-4 text-center">About Me</h2>
+            <p class="text-center text-lg leading-relaxed max-w-3xl mx-auto">
+                Welcome to my Site! I like building random software and creating stuff for no reason. I mostly make apps across Discord, Android and Web-based with both front-end and back-end development. Feel free to explore.
+            </p>
+        </section>
+
+        <section class="mb-12">
+            <h2 class="text-3xl font-bold text-accent mb-6 text-center">My Projects</h2>
+            <div id="projects-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="card p-6 rounded-lg animate-pulse">
+                    <div class="h-4 bg-gray-700 rounded w-3/4 mb-4"></div>
+                    <div class="h-4 bg-gray-700 rounded w-full mb-2"></div>
+                    <div class="h-4 bg-gray-700 rounded w-5/6"></div>
+                </div>
+                <div class="card p-6 rounded-lg animate-pulse">
+                    <div class="h-4 bg-gray-700 rounded w-3/4 mb-4"></div>
+                    <div class="h-4 bg-gray-700 rounded w-full mb-2"></div>
+                    <div class="h-4 bg-gray-700 rounded w-5/6"></div>
+                </div>
+                <div class="card p-6 rounded-lg animate-pulse">
+                    <div class="h-4 bg-gray-700 rounded w-3/4 mb-4"></div>
+                    <div class="h-4 bg-gray-700 rounded w-full mb-2"></div>
+                    <div class="h-4 bg-gray-700 rounded w-5/6"></div>
+                </div>
+            </div>
+        </section>
+
+        <footer class="text-center">
+            <h2 class="text-3xl font-bold text-accent mb-4">Connect with me</h2>
+            <div class="flex justify-center space-x-6">
+                <a href="https://github.com/signalbean" target="_blank" class="text-gray-400 hover:text-accent transition-colors">
+                    <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                        <path fill-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.499.09.679-.217.679-.481 0-.237-.01-1.07-0.015-1.994-2.778.601-3.37-1.34-3.37-1.34-.454-1.156-1.11-1.46-1.11-1.46-.908-.619.069-.607.069-.607 1.004.07 1.531 1.032 1.531 1.032.892 1.529 2.341 1.085 2.91.828.092-.643.35-1.085.634-1.339-2.22-.253-4.555-1.115-4.555-4.99 0-1.102.394-1.998 1.03-2.693-.103-.253-.448-1.27.097-2.659 0 0 .84-.27 2.75 1.025.799-.222 1.643-.333 2.483-.333s1.684.111 2.483.333c1.909-1.296 2.747-1.025 2.747-1.025.546 1.39.202 2.406.1 2.659.638.695 1.028 1.59 1.028 2.693 0 3.884-2.339 4.731-4.566 4.984.357.309.678.92.678 1.855 0 1.339-.012 2.419-.012 2.747 0 .264.18.573.684.475C19.14 20.2 22 16.444 22 12.017 22 6.484 17.522 2 12 2z" clip-rule="evenodd" />
+                    </svg>
+                </a>
+                <a href="https://discord.com/users/925300365459607583" target="_blank" class="text-gray-400 hover:text-accent transition-colors">
+                    <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M19.78 4.25c-.71-.59-1.33-1.05-1.99-1.33-1.15-.49-2.26-.82-3.41-.99-1.74-.26-3.46-.26-5.19 0-1.15.17-2.26.5-3.41.99-2.02.86-3.83 2.51-4.94 4.54-.53.94-.92 2.01-1.14 3.12-1.35 6.78 1.45 13.06 6.8 14.89 2.12.73 4.2.73 6.2 0 5.35-1.83 8.15-8.11 6.8-14.89-.22-1.11-.61-2.18-1.14-3.12zm-3.4 12.87c-1.35 1.4-2.73 2.53-4.14 3.44-.6.39-1.21.75-1.82 1.06-.82.42-1.63.76-2.47 1.02-.13.04-.26.08-.39.12-.13.04-.27.08-.4.11-.08.02-.16.05-.24.07-.13.04-.26.08-.39.11-.13.03-.26.06-.39.09-.13.02-.26.04-.39.06-.13.02-.26.04-.4.06-.05.01-.1.02-.15.02-.2-.04-.4-.08-.6-.12-.03-.01-.06-.02-.09-.03-.13-.03-.26-.06-.39-.09-.13-.03-.26-.06-.39-.08-.13-.03-.26-.05-.39-.08-.13-.02-.26-.05-.39-.07-.13-.02-.26-.05-.39-.08-.41-.09-.81-.19-1.21-.31-1.1-.33-2.2-.7-3.26-1.19-.24-.11-.47-.23-.7-.35-.22-.12-.44-.24-.65-.37-.22-.12-.43-.24-.64-.37-.21-.12-.42-.25-.63-.38-.2-.12-.4-.25-.59-.38-.19-.13-.38-.26-.57-.4-.18-.14-.37-.28-.55-.42-.18-.14-.36-.29-.53-.44-.17-.15-.34-.3-.5-.46-.16-.16-.31-.32-.47-.48-.15-.16-.3-.32-.45-.49-.15-.17-.3-.34-.44-.52-.14-.18-.28-.36-.41-.54-.13-.19-.25-.38-.37-.58-.12-.2-.24-.4-.35-.61-.11-.2-.21-.41-.31-.63-.1-.22-.19-.44-.28-.66-.09-.22-.17-.45-.25-.67-.08-.23-.15-.46-.22-.69-.07-.23-.13-.47-.19-.7-.06-.24-.11-.48-.16-.72-.05-.24-.09-.48-.13-.73-.04-.25-.07-.5-.1-.75-.02-.25-.05-.5-.07-.75-.01-.25-.03-.5-.04-.75-.01-.25-.02-.5-.02-.75-.01-.25-.01-.5-.01-.75 0-.09 0-.17 0-.26-.01-1.15.22-2.12.72-2.91.49-.8.74-1.32.74-1.32.49-.66 1.15-1.24 1.98-1.74 1.25-.78 2.53-1.2 3.82-1.24.4-.01.8-.02 1.2-.02 1.15.01 2.3.17 3.44.49 1.58.45 3.09 1.14 4.54 2.05.81.5 1.57 1.07 2.27 1.72.69.64 1.3 1.34 1.83 2.1.25.37.47.74.67 1.13.2.39.38.78.55 1.17.16.4.31.79.45 1.19.13.4.25.8.36 1.21.11.41.2.82.29 1.23.08.41.15.82.21 1.24.06.42.11.84.15 1.26.04.42.07.85.09 1.27.02.42.04.84.05 1.27.01.42.02.85.02 1.27.01.42.01.84.01 1.27 0 .09 0 .17 0 .26-.01-1.15.22-2.12-.72-2.91-.49.8-1.12 1.32-1.12 1.32-.49.66-1.15 1.24-1.98 1.74-1.25.78-2.53 1.2-3.82 1.24-.4.01-.8.02-1.2.02-1.15-.01-2.3-.17-3.44-.49z" />
+                    </svg>
+                </a>
+                <a href="mailto:signalbean@gmail.com" class="text-gray-400 hover:text-accent transition-colors">
+                    <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm4.243 7.757l-4.707 4.707a1 1 0 01-1.414 0l-2.707-2.707a1 1 0 011.414-1.414l2.25 2.25 4.25-4.25a1 1 0 011.414 1.414z" />
+                    </svg>
+                </a>
+            </div>
+        </footer>
+
     </div>
 
-    <div id="sandbox" class="section">
-      <h3>Sandbox</h3>
-      <p>Messy ideas, experiments, and throwaway scripts.</p>
-      <ul>
-        <li><a href="sandbox/info">Open Sandbox</a></li>
-      </ul>
-    </div>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const githubUsername = 'signalbean';
+            const projectsContainer = document.getElementById('projects-container');
 
-    <div id="projects" class="section">
-      <h3>Projects</h3>
-      <p><strong><a href="projects/aki/info">Aki</a></strong> - Discord bot to fetch images from Danbooru. Public bot.</p>
-      <p><strong><a href="projects/sakuga/info">Sakuga</a></strong> - Predecessor of Aki with similar capabilities.</p>
-      <p><strong><a href="projects/authbean/info">Authbean</a></strong> - A web-based TOTP app.</p>
-    </div>
-  </div>
+            if (githubUsername) {
+                fetch(`https://api.github.com/users/${githubUsername}/repos?sort=updated&per_page=6`)
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Network response was not ok');
+                        }
+                        return response.json();
+                    })
+                    .then(repos => {
+                        projectsContainer.innerHTML = '';
+                        if (repos.length === 0) {
+                            projectsContainer.innerHTML = `<p class="col-span-full text-center">No projects found for this user.</p>`;
+                            return;
+                        }
+
+                        repos.forEach(repo => {
+                            const projectCard = `
+                                <a href="${repo.html_url}" target="_blank" class="card p-6 rounded-lg block">
+                                    <h3 class="text-xl font-bold text-accent mb-2">${repo.name}</h3>
+                                    <p class="text-gray-400 mb-4">${repo.description || 'No description provided.'}</p>
+                                    <div class="flex items-center space-x-4">
+                                        <div class="flex items-center">
+                                            <svg class="w-4 h-4 mr-1 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+                                                <path d="M9.049 2.927c.3-.921 1.637-.921 1.936 0l1.432 4.408a1 1 0 00.95.69h4.633c.969 0 1.371 1.24.588 1.816l-3.758 2.732a1 1 0 00-.364 1.118l1.432 4.408c.3.921-.755 1.688-1.54 1.118l-3.758-2.732a1 1 0 00-1.176 0l-3.758 2.732c-.784.57-1.84-.197-1.54-1.118l1.432-4.408a1 1 0 00-.364-1.118L2.094 9.831c-.783-.576-.381-1.816.588-1.816h4.633a1 1 0 00.95-.69L9.049 2.927z" />
+                                            </svg>
+                                            <span>${repo.stargazers_count}</span>
+                                        </div>
+                                        <div class="flex items-center">
+                                            <svg class="w-4 h-4 mr-1 text-blue-400" fill="currentColor" viewBox="0 0 20 20">
+                                                <path d="M10 12a2 2 0 100-4 2 2 0 000 4z" />
+                                                <path fill-rule="evenodd" d="M.458 10C1.725 4.966 6.136 2 11 2s9.275 2.966 10.542 8c-1.267 5.034-5.678 8-10.542 8S1.725 15.034.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd" />
+                                            </svg>
+                                            <span>${repo.watchers_count}</span>
+                                        </div>
+                                        <span class="text-sm text-gray-500">${new Date(repo.updated_at).toLocaleDateString()}</span>
+                                    </div>
+                                </a>
+                            `;
+                            projectsContainer.innerHTML += projectCard;
+                        });
+                    })
+                    .catch(error => {
+                        console.error('Error fetching GitHub repos:', error);
+                        projectsContainer.innerHTML = `<p class="col-span-full text-center text-red-400">Failed to load projects. Please check your GitHub username and internet connection.</p>`;
+                    });
+            }
+
+            const follower = document.querySelector('.cursor-follower');
+            let mouseX = 0;
+            let mouseY = 0;
+
+            document.addEventListener('mousemove', (e) => {
+                mouseX = e.clientX;
+                mouseY = e.clientY;
+                follower.style.left = `${mouseX}px`;
+                follower.style.top = `${mouseY}px`;
+            });
+
+            document.querySelectorAll('a, button, .card').forEach(el => {
+                el.addEventListener('mouseenter', () => {
+                    follower.classList.add('active');
+                });
+                el.addEventListener('mouseleave', () => {
+                    follower.classList.remove('active');
+                });
+            });
+        });
+    </script>
+
 </body>
 </html>
